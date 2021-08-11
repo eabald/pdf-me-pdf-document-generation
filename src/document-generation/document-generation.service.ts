@@ -10,11 +10,12 @@ export class DocumentGenerationService {
   constructor(
     @InjectContext() private readonly browserContext: BrowserContext,
     @Inject('TEMPLATES_SERVICE') private templatesService: ClientProxy,
+    @Inject('FILES_SERVICE') private filesService: ClientProxy,
   ) {}
   async generate(data: GenerateDocumentDto) {
     // compile template
     const template = await this.templatesService
-      .send({ cmd: 'templates-get-by-id' }, data.documentId)
+      .send({ cmd: 'templates-get-by-id' }, data.templateId)
       .toPromise();
     const content = await Handlebars.compile(template.content)(data.content);
     // get browser
@@ -30,9 +31,12 @@ export class DocumentGenerationService {
     });
     await page.setContent(content);
     await page.emulateMediaType('screen');
-    const pdf = await page.pdf(pdfOptions);
+    const file = await page.pdf(pdfOptions);
     // save file
+    const fileRecord = await this.filesService
+      .send({ cmd: 'files-save' }, { userId: data.userId, file })
+      .toPromise();
     // return file id
-    return console.log(pdf);
+    return fileRecord;
   }
 }
