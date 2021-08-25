@@ -20,7 +20,7 @@ export class DocumentGenerationService {
       .toPromise();
     if (limit.currentLimit < 1) {
       throw new RpcException({
-        message: 'Wrong credentials provided',
+        message: 'Limit exceeded',
         statusCode: HttpStatus.PAYMENT_REQUIRED,
       });
     }
@@ -46,6 +46,10 @@ export class DocumentGenerationService {
     // save file
     const fileRecord = await this.filesService
       .send({ cmd: 'files-save' }, { userId: data.userId, file })
+      .toPromise();
+    // decrease limit
+    await this.limitsService
+      .send({ cmd: 'limits-reduce' }, data.userId)
       .toPromise();
     // return file id
     return fileRecord;
