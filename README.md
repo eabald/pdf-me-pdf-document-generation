@@ -6,7 +6,7 @@ This service main concern is to compile templates and user data into pdf documen
 
 ## Development
 
-To start api-gateway service in development mode first of all install npm dependencies:
+To start documents generation service in development mode first of all install npm dependencies:
 
 ```bash
 npm i
