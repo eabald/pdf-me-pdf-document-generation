@@ -21,7 +21,7 @@ export class DocumentGenerationService {
     const limit = await this.limitsService
       .send({ cmd: 'limits-check' }, data.userId)
       .toPromise();
-    if (limit > 0) {
+    if (limit < 1) {
       throw new RpcException({
         message: 'Limit exceeded',
         statusCode: HttpStatus.PAYMENT_REQUIRED,
