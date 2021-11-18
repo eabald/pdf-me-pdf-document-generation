@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { DocumentGenerationService } from './document-generation.service';
-import { GenerateDocumentDto } from '@pdf-me/shared';
+import { GenerateDocumentDto } from '@eabald/pdf-me-shared';
 
 @Controller('document-generation')
 export class DocumentGenerationController {

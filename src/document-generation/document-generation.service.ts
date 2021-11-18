@@ -1,5 +1,5 @@
 import { Injectable, Inject, HttpStatus, Logger } from '@nestjs/common';
-import { GenerateDocumentDto, InvoiceEntity } from '@pdf-me/shared';
+import { GenerateDocumentDto, InvoiceEntity } from '@eabald/pdf-me-shared';
 import { InjectContext } from 'nest-puppeteer';
 import { BrowserContext, PDFOptions } from 'puppeteer';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
